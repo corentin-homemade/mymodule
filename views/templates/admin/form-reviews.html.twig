@@ -1,0 +1,19 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/modules/mymodule/views/css/form_config.css">
+{% endblock %}
+
+
+{% block content %}
+    {% trans_default_domain 'Modules.Mymodule.Admin' %}
+    <div class="mymodule-form-container">
+        <h1>{{'Update Reviews'|trans}}</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">{{'Save'|trans}}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

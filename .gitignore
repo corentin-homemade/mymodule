@@ -1,0 +1,7 @@
+/vendor/
+
+/var/cache/
+/var/logs/
+/var/sessions/
+
+/node_modules/

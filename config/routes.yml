@@ -1,0 +1,43 @@
+my_module_configuration:
+  path: /mymodule/configuration
+  methods: [GET, POST]
+  defaults:
+    _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleConfigurationController::indexActionForm'
+  requirements:
+    _locale: en|fr|es
+
+
+my_module_index:
+  path: /mymodule/home
+  methods:  [GET]
+  defaults:
+    _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::indexAction'
+  requirements:
+    _locale: en|fr|es
+
+
+
+my_module_search:
+  path: /mymodule/home
+  methods:  [POST]
+  defaults:
+    _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::searchAction'
+
+
+
+mymodule_reviews_update:
+  path: /mymodule/reviews
+  methods: [GET]
+  defaults:
+    -controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::updateReviews'
+  requirements:
+    _locale: en|fr|es
+
+mymodule_reviews_delete:
+  path: /mymodule/reviews/{review_id}
+  methods: [POST]
+  defaults:
+    _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::deleteReviews'
+  requirements:
+    _locale: en|fr|es
+    review_id: \d+

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="admin072diftbpptadtgmjez" source-language="fr-FR" target-language="en-US" datatype="plaintext">
+    <body>
+      <trans-unit id="d01f7c8fb075f813561ed4b4744dd0ab">
+        <source>Texte de configuration</source>
+        <target>Configuration text</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="826677f095a476900fc54eef6c8b8ff4">
+        <source>Maximum 32 caractères</source>
+        <target>Maximum 32 characters</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="c18a34e361343daf65ed4d909e039dce">
+        <source>Afficher dans le menu back office</source>
+        <target>Show in Back Office menu</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="958923c900ce8053993177c2beadcb8a">
+        <source>Activez cette option pour ajouter le module au menu du Back Office.</source>
+        <target>Enable this option to add the module to the Back Office menu.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="83dad8107f9459efe2b4fabcf5b63108">
+        <source>Sélectionner la langue</source>
+        <target>Select Language</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="ad225f707802ba118c22987186dd38e8">
+        <source>Français</source>
+        <target>French</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="78463a384a5aa4fad5fa73e2f506ecfc">
+        <source>Anglais</source>
+        <target>English</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="833dd0987c2d34189aecf1c001832a80">
+        <source>Sélectionner le thème</source>
+        <target>Select Theme</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="51b5e76089f5da04cf725ec11b16716d">
+        <source>Mode Sombre</source>
+        <target>Dark Mode</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="370104a87f84d72ef9a9a525fc3296fb">
+        <source>Mode Lumineux</source>
+        <target>Light Mode</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="2ddddc2a736e4128ce1cdfd22b041e7f">
+        <source>Mon module</source>
+        <target>My module</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="d6968577f69f08c93c209bd8b6b3d4d5">
+        <source>Description de mon module.</source>
+        <target>Description of my module.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="876f23178c29dc2552c0b48bf23cd9bd">
+        <source>Etes-vous sûr de vouloir désinstaller ?</source>
+        <target>Are you sure you want to uninstall?</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="0f40e8817b005044250943f57a21c5e7">
+        <source>Aucun nom fourni</source>
+        <target>No name provided</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="e6a6d78049d45ea3bbba1201faab3170">
+         <source>Configuration de mon module</source>
+         <target>Configuration of my module</target>
+         <note>Line: </note>
+       </trans-unit>
+       <trans-unit id="c9cc8cce247e49bae79f15173ce97354">
+         <source>Enregistrer</source>
+         <target>Save</target>
+         <note>Line: </note>
+       </trans-unit>
+       <trans-unit id="9f5cc4e7c4d93e99a47cd1a27aff20a6">
+         <source>Modification réussite.</source>
+         <target>Edit successful.</target>
+         <note>Line: </note>
+       </trans-unit>
+    </body>
+  </file>
+</xliff>

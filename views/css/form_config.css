@@ -1,0 +1,104 @@
+/* Centrer le formulaire */
+.mymodule-form-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre */
+.mymodule-form-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.mymodule-form-container label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Champs de formulaire */
+.mymodule-form-container input,
+.mymodule-form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Checkboxes et radios */
+.mymodule-form-container .form-check {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.mymodule-form-container .form-check label {
+    margin-left: 5px;
+}
+
+/* Bouton */
+.mymodule-form-container button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.mymodule-form-container button:hover {
+    background: #0056b3;
+}
+
+
+/* Correction de l'alignement des checkboxes */
+/* Amélioration du style du champ checkbox */
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacement entre la case et le texte */
+    padding: 8px 12px;
+    background: #f8f9fa; /* Fond léger */
+    border-radius: 5px; /* Coins arrondis */
+    border: 1px solid #ddd; /* Bordure douce */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Effet au survol */
+.checkbox:hover {
+    background: #ececec;
+    border-color: #bbb;
+}
+
+/* Style du checkbox */
+.checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #007bff; /* Utilisation de la couleur principale de PrestaShop */
+    cursor: pointer;
+}
+
+/* Ajustement du label */
+.checkbox label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+li#subtab-MyModuleController a::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url('../../../modules/mymodule/logo.png') no-repeat center;
+    background-size: contain;
+    margin-right: 5px;
+}

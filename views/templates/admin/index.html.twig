@@ -1,0 +1,21 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+    {% block quotes_list_panel %}
+        {% trans_default_domain 'Modules.Mymodule' %}
+
+        <div class="row">
+            <div class="col" >
+                {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': quoteGrid} %}
+
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('/modules/mymodule/views/js/mymodule_grid.bundle.js') }}&cb={{ 'now'|date('U') }}"></script>
+    <script src="{{ asset('themes/default/js/bundle/pagination.js') }}"></script>
+{% endblock %}

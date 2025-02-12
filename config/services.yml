@@ -1,0 +1,82 @@
+services:
+  _defaults:
+    public: true
+
+  prestashop.module.mymodule.controller.my_module_controller:
+    class: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController'
+    public: true
+
+
+
+
+  prestashop.module.mymodule.form.type.configuration:
+    class: 'PrestaShop\Module\MyModule\Form\MyModuleConfigurationFormType'
+    parent: 'form.type.translatable.aware'
+    public: true
+    tags:
+    - { name: form.type }
+
+  prestashop.module.mymodule.form.configuration_data:
+    class: 'PrestaShop\Module\MyModule\Form\MyModuleConfigurationTextDataConfiguration'
+    arguments: ['@prestashop.adapter.legacy.configuration']
+
+  prestashop.module.mymodule.form.data_provider:
+    class: 'PrestaShop\Module\MyModule\Form\MyModuleConfigurationTextFormDataProvider'
+    arguments:
+    - '@prestashop.module.mymodule.form.configuration_data'
+
+  prestashop.module.mymodule.form.handler:
+    class: 'PrestaShop\PrestaShop\Core\Form\Handler'
+    arguments:
+    - '@form.factory'
+    - '@prestashop.core.hook.dispatcher'
+    - '@prestashop.module.mymodule.form.data_provider'
+    - 'PrestaShop\Module\MyModule\Form\MyModuleConfigurationFormType'
+    - 'MyModuleConfiguration'
+
+  mymodule.grid.filters.product:
+    class: 'PrestaShop\Module\MyModule\Grid\Filters\ProductFilters'
+
+
+  # Adaptation des services pour le grid
+  mymodule.grid.definition.factory.products:
+    class: 'PrestaShop\Module\MyModule\Grid\Definition\Factory\ProductGridDefinitionFactory'
+    parent: 'prestashop.core.grid.definition.factory.abstract_grid_definition'
+    public: true
+
+
+
+
+  mymodule.grid.query_builder.product:
+    class: 'PrestaShop\Module\MyModule\Grid\Query\ProductQueryBuilder'
+    arguments:
+    - '@doctrine.dbal.default_connection'
+    - '%database_prefix%'
+    - '@prestashop.core.query.doctrine_search_criteria_applicator'
+    - "@=service('prestashop.adapter.legacy.context').getContext().language.id"
+    - "@=service('prestashop.adapter.legacy.context').getContext().shop.id"
+    - "@=service('prestashop.adapter.legacy.context').getContext().shop.id_shop_group"
+    - "@=service('prestashop.adapter.legacy.context').getContext().shop.getGroup().share_stock"
+    - '@prestashop.core.grid.query.filter.doctrine_filter_applicator'
+    - '@prestashop.adapter.legacy.configuration'
+
+
+  mymodule.grid.data_provider.products:
+    class: '%prestashop.core.grid.data.factory.doctrine_grid_data_factory%'
+    arguments:
+    - '@mymodule.grid.query_builder.product'
+    - '@prestashop.core.hook.dispatcher'
+    - '@prestashop.core.grid.query.doctrine_query_parser'
+    - 'product'
+
+  mymodule.grid.factory.products:
+    class: 'PrestaShop\PrestaShop\Core\Grid\GridFactory'
+    public: true
+    arguments:
+    - '@mymodule.grid.definition.factory.products'
+    - '@mymodule.grid.data_provider.products'
+    - '@prestashop.core.grid.filter.form_factory'
+    - '@prestashop.core.hook.dispatcher'
+
+
+
