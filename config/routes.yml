@@ -26,7 +26,7 @@ my_module_search:
 
 
 mymodule_reviews_update:
-  path: /mymodule/reviews
+  path: /mymodule/reviews/edit/{review_id}
   methods: [GET]
   defaults:
     -controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::updateReviews'
@@ -34,7 +34,7 @@ mymodule_reviews_update:
     _locale: en|fr|es
 
 mymodule_reviews_delete:
-  path: /mymodule/reviews/{review_id}
+  path: /mymodule/reviews/delete/{review_id}
   methods: [POST]
   defaults:
     _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::deleteReviews'

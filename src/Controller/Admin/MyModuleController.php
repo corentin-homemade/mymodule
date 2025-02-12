@@ -69,36 +69,52 @@ class MyModuleController extends FrameworkBundleAdminController
 
 
 
-    public function updateReviews(Request $request)
+    public function editReview(int $review_id, Request $request)
     {
+        $connection = $this->get('doctrine.dbal.default_connection');
+        $qb = $connection->createQueryBuilder();
+        $qb->select('ps_product_reviews')
+            ->where('review_id = :review_id')
+            ->setParameter('review_id', $review_id)
+            ->execute();
+
+        if (!$qb) {
+            $this->addFlash('error', 'Review not found.');
+            return $this->redirectToRoute('my_module_index');
+        }
+
         $formHandler = $this->get('prestashop.module.mymodule.form.handler');
         $form = $formHandler->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $formHandler->save($form->getData());
+            $data = $form->getData();
 
+            $connection->update('ps_product_reviews', [
+                'rating_value' => $data['rating_value'],
+                'rating_value' => $data['rating_value'],
+            ], ['review_id' => $review_id]);
 
-            if (empty($errors)) {
-                $this->addFlash('success', $this->trans('Edit successful.', 'Modules.Mymodule.Admin'));
-                return $this->redirectToRoute('my_module_index');
-            }
-            $this->flashErrors($errors);
+            $this->addFlash('success', 'Review updated successfully.');
+            return $this->redirectToRoute('my_module_index');
         }
 
-        return $this->render('@Modules/mymodule/views/templates/admin/form-reviews.html.twig', [
+        return $this->render('@Modules/mymodule/views/templates/admin/form-review.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-
+    /**
+     * Delete review functionality.
+     *
+     * @param review_id
+     *
+     * @return RedirectResponse
+     */
     public function deleteReviews(int $review_id)    {
-       /* dump($review_id);
-        die();*/
 
         try {
-            $connection = $this->get('prestashop.core.connection');
-
+            $connection = $this->get('doctrine.dbal.default_connection');
             $qb = $connection->createQueryBuilder();
             $qb->delete('ps_product_reviews')
                 ->where('review_id = :review_id')
