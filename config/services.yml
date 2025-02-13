@@ -16,6 +16,19 @@ services:
     tags:
     - { name: form.type }
 
+
+  prestashop.module.mymodule.form.type.reviews:
+    class: 'PrestaShop\Module\MyModule\Form\ReviewFormType'
+    parent: 'form.type.translatable.aware'
+    public: true
+    tags:
+    - { name: form.type }
+
+  prestashop.module.mymodule.entity.reviews:
+      class: 'PrestaShop\Module\MyModule\Entity\Review'
+      autowire: true
+      autoconfigure: true
+
   prestashop.module.mymodule.form.configuration_data:
     class: 'PrestaShop\Module\MyModule\Form\MyModuleConfigurationTextDataConfiguration'
     arguments: ['@prestashop.adapter.legacy.configuration']

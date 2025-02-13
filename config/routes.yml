@@ -26,18 +26,30 @@ my_module_search:
 
 
 mymodule_reviews_update:
-  path: /mymodule/reviews/edit/{review_id}
-  methods: [GET]
+  path: /mymodule/edit/reviews/{review_id}
+  methods: [GET , POST]
   defaults:
-    -controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::updateReviews'
+    _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::editReview'
   requirements:
     _locale: en|fr|es
+    review_id: \d+
 
 mymodule_reviews_delete:
-  path: /mymodule/reviews/delete/{review_id}
+  path: /mymodule/delete/reviews/{review_id}
   methods: [POST]
   defaults:
-    _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::deleteReviews'
+    _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::deleteReview'
+  requirements:
+    _locale: en|fr|es
+    review_id: \d+
+
+
+
+mymodule_reviews_create:
+  path: /mymodule/create/reviews/{id_order}/{id_product}/{id_customer}
+  methods:  [GET , POST]
+  defaults:
+    _controller: 'PrestaShop\Module\MyModule\Controller\Admin\MyModuleController::createReview'
   requirements:
     _locale: en|fr|es
     review_id: \d+

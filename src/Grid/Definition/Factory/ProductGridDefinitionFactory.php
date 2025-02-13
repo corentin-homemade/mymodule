@@ -40,6 +40,9 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
     /**
      * {@inheritdoc}
      */
+
+
+
     protected function getColumns()
     {
         return (new ColumnCollection())
@@ -76,6 +79,12 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                     ->setName($this->trans('Reference', [], 'Modules.Mymodule'))
                     ->setOptions([
                         'field' => 'reference',
+                    ])
+            )
+            ->add(
+                (new DataColumn('id_customer'))
+                    ->setOptions([
+                        'field' => 'id_customer',
                     ])
             )
             ->add(
@@ -118,6 +127,26 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                     ->setOptions([
                         'actions' => (new RowActionCollection())
                             ->add(
+                                (new LinkRowAction('create'))
+                                    ->setName($this->trans('Create', [], 'Modules.Mymodule.Admin'))
+                                    ->setIcon('add')
+                                    ->setOptions([
+                                        'route' => 'mymodule_reviews_create',
+                                        'route_param_name' => 'id_order',
+                                        'route_param_field' => 'id_order',
+                                        'extra_route_params' => [
+                                            'id_product' => 'id_product',
+                                            'id_customer' => 'id_customer',
+                                        ],
+                                        'accessibility_checker' => function ($row) {
+                                            if (isset($row['review_id']) && !empty($row['review_id'])) {
+                                                return false;
+                                            }
+                                            return true;
+                                        },
+                                    ])
+                            )
+                            ->add(
                                 (new LinkRowAction('edit'))
                                     ->setName($this->trans('Edit', [], 'Modules.Mymodule.Admin'))
                                     ->setIcon('edit')
@@ -125,7 +154,14 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                                         'route' => 'mymodule_reviews_update',
                                         'route_param_name' => 'review_id',
                                         'route_param_field' => 'review_id',
+                                        'accessibility_checker' => function ($row) {
+                                            if (!isset($row['review_id']) || empty($row['review_id'])) {
+                                                return false;
+                                            }
+                                            return true;
+                                        },
                                     ])
+
                             )
                             ->add(
                                 (new SubmitRowAction('delete'))
@@ -135,7 +171,13 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                                         'route' => 'mymodule_reviews_delete',
                                         'route_param_name' => 'review_id',
                                         'route_param_field' => 'review_id',
-                                        'confirm_message' => $this->trans('Are you sure you want to delete this review?', [], 'Modules.Mymodule.Admin'),
+                                        'accessibility_checker' => function ($row) {
+                                            if (!isset($row['review_id']) || empty($row['review_id'])) {
+                                                return false;
+                                            }
+                                            return true;
+                                        },
+                                        'confirm_message' => $this->trans('Are you sure you want to delete this review?', [], 'Modules.Mymodule'),
                                     ])
                             ),
                     ])

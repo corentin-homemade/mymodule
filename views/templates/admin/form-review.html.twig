@@ -7,9 +7,9 @@
 
 
 {% block content %}
-    {% trans_default_domain 'Modules.Mymodule.Admin' %}
+    {% trans_default_domain 'Modules.Mymodule' %}
     <div class="mymodule-form-container">
-        <h1>{{'Update Reviews'|trans}}</h1>
+        <h1>{{title}}</h1>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}

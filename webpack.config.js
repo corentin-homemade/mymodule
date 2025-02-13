@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: '/js/index.js',
+    entry: './js/index.js',
     output: {
         filename: 'mymodule_grid.bundle.js',
         path: path.resolve(__dirname, 'views/js'),

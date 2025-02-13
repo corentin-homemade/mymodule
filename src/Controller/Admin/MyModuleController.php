@@ -6,6 +6,7 @@ namespace PrestaShop\Module\MyModule\Controller\Admin;
 
 
 use mysql_xdevapi\Exception;
+use PrestaShop\Module\MyModule\Entity\Review;
 use PrestaShop\Module\MyModule\Grid\Definition\Factory\ProductGridDefinitionFactory;
 use PrestaShop\Module\MyModule\Grid\Filters\ProductFilters;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
@@ -13,6 +14,7 @@ use PrestaShopBundle\Service\Grid\ResponseBuilder;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use PrestaShop\Module\MyModule\Form\ReviewFormType;
 
 
 
@@ -73,34 +75,40 @@ class MyModuleController extends FrameworkBundleAdminController
     {
         $connection = $this->get('doctrine.dbal.default_connection');
         $qb = $connection->createQueryBuilder();
-        $qb->select('ps_product_reviews')
+
+        $qb ->select('*')
+            ->from('ps_product_reviews')
             ->where('review_id = :review_id')
-            ->setParameter('review_id', $review_id)
-            ->execute();
+            ->setParameter('review_id', $review_id);
 
-        if (!$qb) {
-            $this->addFlash('error', 'Review not found.');
-            return $this->redirectToRoute('my_module_index');
-        }
 
-        $formHandler = $this->get('prestashop.module.mymodule.form.handler');
-        $form = $formHandler->getForm();
+        $result = $qb->execute()->fetchAssociative();
+
+        $review = new Review();
+        $review->setRatingValue($result['rating_value']);
+        $review->setReviewText($result['review_text']);
+
+        $form = $this->createForm(ReviewFormType::class, $review);
         $form->handleRequest($request);
+
+        $title = $this->trans('Update Review','Modules.Mymodule');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
             $connection->update('ps_product_reviews', [
-                'rating_value' => $data['rating_value'],
-                'rating_value' => $data['rating_value'],
+                'rating_value' =>$data->getRatingValue(),
+                'review_text' => $data->getReviewText(),
             ], ['review_id' => $review_id]);
 
-            $this->addFlash('success', 'Review updated successfully.');
+            $this->addFlash('success', $this->trans('Review updated successfully.', 'Modules.Mymodule'));
             return $this->redirectToRoute('my_module_index');
         }
 
         return $this->render('@Modules/mymodule/views/templates/admin/form-review.html.twig', [
             'form' => $form->createView(),
+            'title' => $title,
+
         ]);
     }
 
@@ -111,7 +119,7 @@ class MyModuleController extends FrameworkBundleAdminController
      *
      * @return RedirectResponse
      */
-    public function deleteReviews(int $review_id)    {
+    public function deleteReview(int $review_id)    {
 
         try {
             $connection = $this->get('doctrine.dbal.default_connection');
@@ -121,12 +129,50 @@ class MyModuleController extends FrameworkBundleAdminController
                 ->setParameter('review_id', $review_id)
                 ->execute();
 
-            $this->addFlash('success', $this->trans('Review deleted successfully.', 'Modules.Mymodule.Admin'));
+            $this->addFlash('success', $this->trans('Review deleted successfully.', 'Modules.Mymodule'));
         }catch (Exception $e){
             $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages($e)));
 
         }
         return $this->redirectToRoute('my_module_index');
     }
+
+
+
+    public function createReview(int $id_order, int $id_product, int $id_customer, Request $request)
+    {
+        $review = new Review();
+
+
+        $form = $this->createForm(ReviewFormType::class, $review);
+        $form->handleRequest($request);
+
+        $title =$this->trans('Create Review','Modules.Mymodule' );
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $currentDate = new \DateTime();
+            $connection = $this->get('doctrine.dbal.default_connection');
+
+            $connection->insert('ps_product_reviews', [
+                'order_id' => $id_order,
+                'product_id' => $id_product,
+                'user_id' => $id_customer,
+                'rating_value' => $data->getRatingValue(),
+                'review_text' => $data->getReviewText(),
+                'review_date' => $currentDate->format('Y-m-d H:i:s'),
+            ]);
+
+            $this->addFlash('success', $this->trans('Review created successfully.', 'Modules.Mymodule'));
+
+            return $this->redirectToRoute('my_module_index');
+        }
+
+        return $this->render('@Modules/mymodule/views/templates/admin/form-review.html.twig', [
+            'form' => $form->createView(),
+            'title' => $title,
+        ]);
+    }
+
 
 }
